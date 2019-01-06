@@ -84,7 +84,7 @@ class ViewController: UIViewController {
             
         }
         
-        let topStripeAnimation = UIViewPropertyAnimator(duration: duration, dampingRatio: 0.7) {
+        let topStripeAnimation = UIViewPropertyAnimator(duration: duration, dampingRatio: 0.25) {
             
             self.topStripe.transform = CGAffineTransform(rotationAngle: CGFloat(180 * (Double.pi/180)))
             
@@ -97,7 +97,7 @@ class ViewController: UIViewController {
             
         }
         
-        let secTopStripeAnimation = UIViewPropertyAnimator(duration: duration, dampingRatio: 0.25) {
+        let secTopStripeAnimation = UIViewPropertyAnimator(duration: duration, dampingRatio: 0.7) {
             
             self.secTopStripe.transform = CGAffineTransform(rotationAngle: CGFloat(180 * (Double.pi/180)))
             
@@ -137,32 +137,51 @@ class ViewController: UIViewController {
         }
         
         topStripeAnimation.addCompletion { _ in
+            
             self.topStripe.transform = CGAffineTransform.identity
+            self.secTopStripe.transform = CGAffineTransform.identity
+            self.secBottomStripe.transform = CGAffineTransform.identity
+            self.bottomStripe.transform = CGAffineTransform.identity
+            self.centerStripe.transform = CGAffineTransform.identity
+            
+            self.animations.removeAll()
+            
+            self.hasRotated = !self.hasRotated
         }
         
         secTopStripeAnimation.addCompletion { _ in
-            self.secTopStripe.transform = CGAffineTransform.identity
+            
+            self.animations.removeAll()
+            
+            self.animations.append(topStripeAnimation)
+            self.animations.append(bottomStripeAnimation)
+            
+            for anm in self.animations {
+                anm.startAnimation()
+            }
+            
         }
-        
+        /*
         secBottomStripeAnimation.addCompletion { _ in
-            self.secBottomStripe.transform = CGAffineTransform.identity
+            
         }
         
         bottomStripeAnimation.addCompletion { _ in
-            self.bottomStripe.transform = CGAffineTransform.identity
+            
         }
-        
+        */
         centerStripeAnimation.addCompletion { _ in
-            self.hasRotated = !self.hasRotated
-            self.centerStripe.transform = CGAffineTransform.identity
+
             self.animations.removeAll()
+            
+            self.animations.append(secTopStripeAnimation)
+            self.animations.append(secBottomStripeAnimation)
+            for anm in self.animations {
+                anm.startAnimation()
+            }
         }
         
         animations.append(centerStripeAnimation)
-        animations.append(topStripeAnimation)
-        animations.append(secTopStripeAnimation)
-        animations.append(secBottomStripeAnimation)
-        animations.append(bottomStripeAnimation)
         
         for anm in animations {
             anm.startAnimation()
