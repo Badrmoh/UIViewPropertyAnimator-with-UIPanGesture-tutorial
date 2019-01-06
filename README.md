@@ -1,4 +1,4 @@
-# Preview of branch "part3"
-![image-part3](image-part3.gif)
+# Preview of branch "part3"    
+<p><a href="url"><img src="image-part3.gif" align="left" height="667" width="375" ></a><br>
 # Preview of branch "master"
-![image-master](image-master.gif)
+<p><a href="url"><img src="image-master.gif" align="left" height="667" width="375" ></a><br>
